@@ -1,0 +1,169 @@
+---
+import FormatText from "../../hooks/FormatText";
+import type { RootObject } from "../../interfaces/dbData";
+import IconGlobal from "../global/IconGlobal";
+import GalleryFooter from "./galleryFooter.tsx";
+
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+const year = new Date().getFullYear();
+---
+
+<footer class="text-white bg-[#4d010110]">
+  <!-- Slogan principal -->
+  <div class="w-full pt-10">
+    <div
+      class="md:w-[78%] w-[90%] mx-auto flex md:flex-row flex-col items-center justify-between md:py-14 py-10 hoverBorder"
+    >
+      <h2 class="font-bold text-4xl text-secondary md:w-1/2 w-full">
+        {data.slogan[5]}
+      </h2>
+      <a
+        href="#"
+        class="inline-block bg-primary text-white font-medium px-6 py-2 rounded-full hover:bg-secondary"
+      >
+        Get Started →
+      </a>
+    </div>
+
+    <!-- Contenido del footer -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-4 md:w-[80%] mx-auto w-[95%] bg-slate-50 rounded-t-xl mt-8"
+    >
+      <div class="w-full mb-6 md:p-4 flex flex-col items-center p-2">
+        <picture class="w-[70%] h-auto">
+          <img
+            src={data.logos.secondary}
+            alt={`logo ${data?.name}`}
+            loading="eager"
+            class="w-full h-auto object-contain"
+            width="300"
+            height="200"
+          />
+        </picture>
+        <p class="text-black w-[80%] pb-6">
+          {data.about[1].text.substring(0, 144)}
+        </p>
+        <ul class="flex gap-4">
+          {
+            data.redesSociales.map((item) => {
+              return (
+                <a
+                  style={{ backgroundColor: data.colors.primaryColor }}
+                  href={item.link}
+                  target="_blank"
+                  aria-label={item.name}
+                  class={`bg-[${data.colors.primaryColor}] w-10 h-10 flex justify-center items-center self-center rounded-full text-[18px] text-white`}
+                >
+                  <i class={`fa-brands fa-${item.icon}`} />
+                </a>
+              );
+            })
+          }
+        </ul>
+      </div>
+      <!-- Servicios -->
+      <div class="w-full mb-6 md:p-4 p-2">
+        <h3 class="text-[20px] font-bold text-secondary mb-3 hoverBorder pb-2">
+          Services
+        </h3>
+        <div class="grid grid-cols-2 gap-2">
+          {
+            data.services.slice(0, 8).map((service) => (
+              <a
+                href={
+                  data.widgets.landingServices
+                    ? `/services/${FormatText(service.title)}`
+                    : data.widgets.onePages
+                      ? "/"
+                      : "/services"
+                }
+                class="flex items-center text-gray-800"
+              >
+                <div class="flex items-center">
+                  <span class="text-white mr-2 w-8 h-8 flex items-center justify-center bg-primary p-2 text-[18px] rounded-full">
+                    <IconGlobal />
+                  </span>
+                  <span>{service.title}</span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+  
+      <!-- Información oficial -->
+      <div class="w-full mb-6 md:p-4 p-2">
+        <h3 class="text-[20px] font-bold text-secondary mb-3 hoverBorder pb-2">
+          Official Info:
+        </h3>
+        <ul>
+          {
+            data.dataGeneral.emails.map((email) => (
+              <li class="mb-2 flex gap-2 items-center">
+                <i class="fas fa-envelope text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+                <a
+                  href={`mailto:${email.email}`}
+                  class="flex flex-col text-gray-800"
+                >
+                  <span class="font-bold">Email</span>
+                  <span>{email.email}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <ul class="grid grid-cols-2 gap-4 text-gray-800">
+          {
+            data.dataGeneral.location.slice(0, 1).map((loc) => (
+              <li class="mb-2 flex gap-2 items-center">
+                <i class="fas fa-location text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+                <span class="flex flex-col">
+                  <span class="font-bold">Location</span>
+                  <span>{loc.city}</span>
+                </span>
+              </li>
+            ))
+          }
+          {
+            data.dataGeneral.phones.map((phone) => (
+              <li class="mb-2 flex gap-2 items-center">
+                <i class="fas fa-phone text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+                <a href={`tel:+1${phone.number}`} class="flex flex-col">
+                  <span class="font-bold">{phone.title}</span>
+                  <span>{phone.number}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="py-4 text-center gap-4 md:w-[80%] mx-auto w-[95%] bg-slate-50 flex items-center justify-between"
+    >
+      <div
+        class="w-full mx-auto flex flex-wrap justify-between text-gray-700 items-center px-4"
+      >
+        <p class="text-[20px] font-bold">
+          © {year} All rights reserved by {data.name}
+        </p>
+        {
+          !data.widgets.onePages && (
+            <ul class="flex gap-6 font-bold flex-wrap text-gray-700">
+              {["Home", "Services", "Portfolio", "Contact"].map((item) => (
+                <li class="mx-2 border-l-2 border-white pl-2 hover:scale-110 transition-all">
+                  <a href={`/${item.toLowerCase()}`} class=" text-gray-700">
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</footer>

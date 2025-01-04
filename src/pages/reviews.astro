@@ -1,0 +1,24 @@
+---
+import TransparentHeader from "../components/global/TransparentHeader.astro";
+import type { RootObject } from "../interfaces/dbData";
+import ContentReviews from "../components/reviews/ContentReviews";
+import Layout from "../layouts/Layout.astro";
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+---
+
+<Layout
+  title={`Reviews | ${data.name}`}
+  description={data.home[0].text}
+  favicon={data.logos.primary}
+  featuredImage={data.logos.favicon}
+  keywords="reviews, testimonials, feedback, comments, ratings, stars, testimonials, customer reviews, customer feedback, customer comments, customer ratings, customer stars"
+>
+  <TransparentHeader title="Reviews" image={data.gallery[10]} />
+  <div
+    class="md:w-[75%] mx-auto w-[95%] md:py-24 py-10 flex justify-center flex-col text-center"
+  >
+  <review-widget widgetId="2daa6f8d-53f9-4fe0-b3e6-c61064b70d4f"></review-widget>
+
+  </div>
+</Layout>

@@ -1,0 +1,89 @@
+---
+import Menu from "../../components/headerComponents/MegaMenu.tsx";
+import type { RootObject } from "../../interfaces/dbData";
+import ButtonContent_3 from "../buttons/ButtonContent_3";
+import MenuMobile from "../headerComponents/MenuMobile";
+import ButtonHeader from "../buttons/ButtonHeader"
+
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+---
+
+<style>
+  .cortetop {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 4% 100%);
+  }
+</style>
+
+<header transition:animate="none" class="w-full h-auto md:flex flex-col hidden">
+  <section
+    class="w-[100%] bg-[#0e121d] md:flex hidden md:items-center text-white z-10 capitalize"
+  >
+    <div class="w-[55%] flex">
+      {
+        data.dataGeneral.openingHours.slice(0, 1).map((item) => (
+          <div class="flex gap-4 items-center text-md border-r-2 px-4">
+            <i class="fa-solid fa-clock text-md text-primary" />
+            <span>{item.days}</span>
+            <span>{item.hours}</span>
+          </div>
+        ))
+      }
+      {
+        data.dataGeneral.phones.slice(0, 2).map((item) => (
+          <div class="flex gap-4 items-center text-md border-r-2 px-4">
+            <i class="fa-solid fa-phone-volume text-md text-primary" />
+            <span>{item.number}</span>
+          </div>
+        ))
+      }
+      {
+        data.dataGeneral.location.slice(0, 1).map((item) => (
+          <div class="flex gap-4 items-center text-md pl-4">
+            <i class="fa-solid fa-location-dot text-md text-primary" />
+            <span>{item.city}</span>
+          </div>
+        ))
+      }
+    </div>
+    <div
+      class="w-[45%] bg-primary cortetop h-full py-2 flex items-center justify-center"
+    >
+      <p>Follow Us On:</p>
+      {
+        data.redesSociales.map((item) => (
+          <a
+            href={item.link}
+            target="_blank"
+            aria-label={item.name}
+            class={`bg-[${data.colors.primaryColor}] w-10 h-10 flex justify-center items-center self-center text-[18px]`}
+          >
+            <i class={`fa-brands fa-${item.icon}`} />
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-white dark:bg-black w-full flex">
+    <img src="../../../public/assets/img/services-v1-shape1.png" class="absolute top-0 right-0 opacity-40 w-[50%]"/>
+    <div class="w-[20%] flex justify-center">
+      <img
+        src={data.logos.secondary}
+        alt={data.name}
+        class="max-w-[220px] max-h-[220px] object-contain animated-element"
+        width="220"
+        height="220"
+        loading="lazy"
+      />
+    </div>
+    <div class="w-[80%] flex items-center justify-between px-[5%]">
+      <Menu data={data} colorText="text-2xl" client:load/>
+
+      <ButtonHeader/>
+    </div>
+  </section>
+</header>
+<div class="md:hidden block">
+  <MenuMobile data={data} client:visible />
+</div>

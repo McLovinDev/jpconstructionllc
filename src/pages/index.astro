@@ -1,0 +1,69 @@
+---
+import Layout from "../layouts/Layout.astro";
+import type { RootObject } from "../interfaces/dbData";
+import BlockOne from "../components/home/BlockOne.tsx";
+import BlockOneAbout from "../components/home/BlockAboutHome.tsx";
+import MapComponent from "../components/contact/Map.tsx";
+import VideoAnimado from "../components/global/video/VideoAnimado";
+import Directorios from "../components/home/Directorios";
+import ServicesHome from "../components/home/ServicesSlider";
+import BlockTwo from "../components/home/BlockTwo2";
+import ColorPalette from "../components/home/ColorPalette.astro";
+import Slideshow from "../components/home/SlideShow2";
+import GalleryHome from "../components/home/GalleryHome";
+import BlockTitle from "../components/home/BlockTitle.tsx";
+
+// Realiza la llamada a la API
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+---
+
+<Layout
+  title={`Home | ${data.name}`}
+  description={data.home[0].text}
+  favicon={data.logos.primary}
+  featuredImage={data.logos.favicon}
+  keywords={data.services.map((service) => service.title).join(", ")}
+>
+  <Slideshow data={data} client:load />
+
+  <BlockOne data={data} client:load />
+  {
+    data.videoAnimado.length > 0 ? (
+      <div>
+        <div
+          class="flex justify-center rounded-br-[50px] md:h-[70vh] h-[50vh] relative md:my-2 mt-10 mb-24"
+          style={{
+            background: `url("${data.gallery[2]}")`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
+        >
+          {/* Poner un overlay */}
+          <div class="bg-black bg-opacity-70 w-full md:h-[70vh] h-[50vh] absolute" />
+        </div>
+        <div class="mt-[-450px] z-10 relative">
+          <VideoAnimado data={data} />
+        </div>
+      </div>
+    ) : null
+  }
+  <Directorios client:only data={data} />
+
+  <GalleryHome data={data} landingServices client:load />
+
+  <BlockTwo dataGlobal={data} nameCompany={data.name} client:load />
+
+  <BlockTitle data={data} client:load />
+
+  <section class="relative h-screen">
+    <ServicesHome data={data} client:load />
+  </section>
+  <!-- <ValuesHome data={data} /> -->
+
+  {data.widgets.colorPalette ? <ColorPalette /> : null}
+
+  <BlockOneAbout data={data} client:load />
+
+  <MapComponent data={data} client:visible />
+</Layout>

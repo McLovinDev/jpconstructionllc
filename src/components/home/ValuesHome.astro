@@ -1,0 +1,56 @@
+---
+import type { RootObject } from "../../interfaces/dbData";
+import IconGlobal from "../global/IconGlobal";
+interface Props {
+  data: RootObject;
+}
+
+const { data } = Astro.props;
+---
+
+<section
+  class="flex items-center justify-center relative flex-col md:mt-[-260px] mt-[-180px]"
+>
+  <div class="px-4 py-10 mx-auto max-w-7xl">
+    <div
+      class="grid grid-cols-1 gap-x-4 gap-y-6 lg:gap-x-8 lg:gap-y-8 md:grid-cols-2 lg:grid-cols-3"
+    >
+      <div
+         class="w-full p-8 mb-5 md:text-start text-center transition-all rounded-2xl hover:shadow-lg flex flex-col gap-2 bg-gray-50 border-2 border-secondary
+   hover:bg-gray-100"
+      >
+        <div class="text-[30px] text-secondary">
+          <IconGlobal />
+        </div>
+        <h2 class="mb-4 text-2xl font-bold">Mission</h2>
+        <p class="text-base">
+          {data.valuesContent.mission}
+        </p>
+      </div>
+      <div
+        class="w-full p-8 mb-5 md:text-start text-center transition-all rounded-2xl hover:shadow-lg flex flex-col gap-2
+  border-2 border-white gradient-background"
+      >
+        <div class="text-[30px] text-white">
+          <IconGlobal />
+        </div>
+        <h2 class="mb-4 text-2xl font-semibold text-white">Vision</h2>
+        <p class="text-base text-white">
+          {data.valuesContent.vision}
+        </p>
+      </div>
+      <div
+        class="w-full p-8 mb-5 md:text-start text-center transition-all rounded-2xl hover:shadow-lg flex flex-col gap-2 bg-gray-50 border-2 border-secondary
+   hover:bg-gray-100"
+      >
+        <div class="text-[30px] text-secondary">
+          <IconGlobal />
+        </div>
+        <h2 class="mb-4 text-2xl font-bold">Why Choose Us</h2>
+        <p class="text-base">
+          {data.valuesContent.whychooseUs}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

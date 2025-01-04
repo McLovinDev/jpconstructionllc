@@ -1,0 +1,207 @@
+---
+import FormatText from "../../hooks/FormatText";
+import type { RootObject } from "../../interfaces/dbData";
+import IconGlobal from "../global/IconGlobal";
+import GalleryFooter from "./galleryFooter.tsx";
+
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+
+//año actual
+const year = new Date().getFullYear();
+---
+
+<footer class="text-white bg-primary">
+  <div
+    class="md:w-[70%] flex justify-center items-center mb-[-120px] mx-auto"
+  >
+    <img
+      src={data.logos.secondary}
+      alt={data.name}
+      class="max-w-[250px] max-h-[250px] 
+        h-[250px] w-[250px]
+      object-contain bg-primary p-6 rounded-full animated-element"
+      width="250"
+      height="250"
+      loading="lazy"
+    />
+   
+  </div>
+  <div class="w-full bg-gray-100 pt-28">
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-4
+    md:w-[80%] mx-auto w-[95%]"
+    >
+    <!-- Official Info -->
+    <div class="w-full mb-6 md:p-4 p-2"> 
+      <h3 class="text-[20px] font-bold text-secondary mb-3 hoverBorder pb-2">
+        Official Info:
+      </h3>
+      
+      <ul>
+        {
+          data.dataGeneral.emails.map((email) => (
+            <li class="mb-2 flex gap-2 items-center">
+              <i class="fas fa-envelope text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+
+              <a
+                href={`mailto:${email.email}`}
+                class="flex flex-col text-gray-800"
+              >
+                <span class="font-bold">Email</span>
+                <span>{email.email}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <ul
+        class="list-none mb-4
+        grid grid-cols-2 gap-4 text-gray-800"
+      >
+        {
+          data.dataGeneral.location.slice(0, 1).map((phone) => (
+            <li class="mb-2 flex gap-2 items-center">
+              <i class="fas fa-location text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+              <span class="flex flex-col text-gray-800">
+                <span class="font-bold">Location</span>
+                <span>{phone.city}</span>
+              </span>
+            </li>
+          ))
+        }
+        {
+          data.dataGeneral.phones.map((phone) => (
+            <li class="mb-2 flex gap-2 items-center">
+              <i class="fas fa-phone text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+
+              <a
+                href={`tel:+1${phone.number}`}
+                class="flex flex-col text-gray-800"
+              >
+                <span class="font-bold">{phone.title}</span>
+                <span>{phone.number}</span>
+              </a>
+            </li>
+          ))
+        }
+
+        {
+          data.dataGeneral.openingHours.map((hours) => (
+            <li class="mb-2 flex gap-2 items-center">
+              <i class="fas fa-calendar text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+
+              <span class="flex flex-col text-gray-800">
+                <span class="font-bold">{hours.days}</span>
+                <span>{hours.hours}</span>
+              </span>
+            </li>
+          ))
+        }
+            <li class="mb-2 flex gap-2 items-center">
+              <i class="fas fa-credit-card text-white mr-2 bg-secondary p-2 text-[18px] rounded-full" />
+
+              <span class="flex flex-col text-gray-800">
+                <span class="font-bold">Payment Methods</span>
+                <span>{data.methodsPayment}</span>
+              </span>
+            </li>
+        
+      </ul>
+    </div>
+      <!-- Newsletter -->
+      <div class="w-full mb-6 md:p-4 p-2">
+        <h3 class="text-[20px] font-bold text-secondary mb-3 hoverBorder pb-2">Services</h3>
+        <div class="grid grid-cols-2 gap-2 text-gray-800">
+          {
+            data.services.slice(0, 8).map((service) => (
+              <a
+                class="mb-2"
+                href={
+                  data.widgets.landingServices === true
+                    ? `/services/${FormatText(service.title)}`
+                    : data.widgets.onePages
+                      ? "/"
+                      : "/services"
+                }
+                class="flex items-center"
+              >
+              <div class="flex items-center">
+                <span class="text-white mr-2 w-8 h-8 flex items-center justify-center bg-primary p-2 text-[18px] rounded-full">
+                  <IconGlobal />
+                </span>
+                <span class="text-gray-800">{service.title}</span>
+              </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      
+
+      <!-- Gallery -->
+      <div class="w-full mb-6 md:p-4 p-2">
+        <h3 class="text-[20px] font-bold text-secondary mb-3 hoverBorder pb-2">Gallery</h3>
+        <GalleryFooter data={data} client:load />
+      </div>
+    </div>
+  </div>
+  <div
+    class="py-4 w-full text-center gradient-background flex items-center justify-between"
+  >
+    <div class="md:w-[80%] mx-auto flex flex-wrap justify-between items-center">
+      <div>
+        <p class="text-center text-white
+      text-[20px] font-bold">
+          © {year} All rights reserved by {data.name}
+        </p>
+      </div>
+      {
+        data.widgets.onePages  ?
+         <></> 
+         : <div>
+            <ul class="list-none flex justify-center items-center text-white gap-6 font-bold flex-wrap md:pt-0 pt-4">
+              <li
+                class="mx-2 border-l-2 border-white pl-2 flex gap-2 items-center hover:transform
+          hover:scale-110 transition-all duration-300 ease-in-out"
+              >
+                <a href="/" class="text-white">
+                  Home
+                </a>
+                <i class="fas fa-chevron-right text-[12px]" />
+              </li>
+              <li
+                class="mx-2 border-l-2 border-white pl-2 flex gap-2 items-center hover:transform
+            ver:scale-110 transition-all duration-300 ease-in-out"
+              >
+                <a href="/services" class="text-white">
+                  Services
+                </a>
+                <i class="fas fa-chevron-right text-[12px]" />
+              </li>
+              <li
+                class="mx-2 border-l-2 border-white pl-2 flex gap-2 items-center hover:transform
+            ver:scale-110 transition-all duration-300 ease-in-out"
+              >
+                <a href="/portfolio" class="text-white">
+                  Portfolio
+                </a>
+                <i class="fas fa-chevron-right text-[12px]" />
+              </li>
+              <li
+                class="mx-2 border-l-2 border-white pl-2 flex gap-2 items-center hover:transform
+            ver:scale-110 transition-all duration-300 ease-in-out"
+              >
+                <a href="/contact" class="text-white">
+                  Contact
+                </a>
+                <i class="fas fa-chevron-right text-[12px]" />
+              </li>
+            </ul>
+          </div>
+      }
+
+    </div>
+  </div>
+</footer>

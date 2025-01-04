@@ -1,0 +1,22 @@
+---
+const brandImages = import.meta.globEager(
+  "/public/brands/*.{jpg,png,jpeg,gif}"
+); // Ajusta las extensiones según tus imágenes
+---
+
+<div class="flex flex-col md:w-[70%] mx-auto w-[98%] text-center">
+  <h2 class="md:text-[50px] text-primary text-[28px] font-bold">
+    Brands we use
+  </h2>
+  <div class="flex flex-wrap gap-4 justify-center">
+    {
+      Object.keys(brandImages).map((path) => (
+        <img
+          src={path.replace("/public", "")}
+          alt="Brand Logo"
+          class="max-w-[150px] md:max-w-[200px] h-auto object-contain"
+        />
+      ))
+    }
+  </div>
+</div>

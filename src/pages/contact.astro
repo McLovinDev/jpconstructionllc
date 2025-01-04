@@ -1,0 +1,34 @@
+---
+import type { RootObject } from "../interfaces/dbData";
+import Layout from "../layouts/Layout.astro";
+import ContactComponent from "../components/contact/contact.astro";
+import ContactForm from "../components/contact/Form";
+import MapComponent from "../components/contact/Map.tsx";
+import TransparentHeader from "../components/global/TransparentHeader.astro";
+
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+---
+
+<Layout
+  title={`Contact | ${data.name}`}
+  description={data.home[0].text}
+  favicon={data.logos.primary}
+  featuredImage={data.logos.favicon}
+  keywords={data.services.map((service) => service.title).join(", ")}
+>
+  <TransparentHeader title="Contact Us" image={data.gallery[5]} />
+  <section
+    class="flex md:flex-row flex-col md:w-[75%] mx-auto w-[90%] bg-[#1167a033] rounded-md p-5 md:mt-24 mt-10"
+  >
+    <div class="md:w-[40%] bg-slate-100 flex flex-col md:p-6">
+      <h2 class="text-3xl font-bold mb-4">Get In Touch!</h2>
+      <ContactForm data={data} client:load />
+    </div>
+    <div class="md:w-[60%] flex flex-col md:p-6">
+      <h2 class="text-3xl font-bold mb-4">Contact Info</h2>
+      <ContactComponent data={data} />
+    </div>
+  </section>
+  <MapComponent data={data} client:visible />
+</Layout>

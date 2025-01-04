@@ -1,0 +1,25 @@
+---
+import type { RootObject } from "../interfaces/dbData";
+import Blockone from "../components/home/BlockAboutHome";
+import BlockTwo from "../components/about/BlockTwo2";
+import Values from "../components/about/ValuesAbout";
+import Layout from "../layouts/Layout.astro";
+import TransparentHeader from "../components/global/TransparentHeader.astro";
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+---
+
+<Layout
+  title={`Home | ${data.name}`}
+  description={data.home[0].text}
+  favicon={data.logos.primary}
+  featuredImage={data.logos.favicon}
+  keywords={data.services.map((service) => service.title).join(", ")}
+>
+  <TransparentHeader title="About Us" image={data.gallery[8]} />
+  <div>
+    <Blockone data={data} client:load />
+    <Values data={data} client:load />
+    <BlockTwo data={data} nameCompany={data.name} client:load/>
+  </div>
+</Layout>

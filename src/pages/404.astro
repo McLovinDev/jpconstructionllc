@@ -1,0 +1,17 @@
+---
+import type { RootObject } from "../interfaces/dbData";
+import Layout from "../layouts/Layout.astro";
+const response = await fetch(import.meta.env.API_URL);
+const data: RootObject = await response.json();
+---
+
+<Layout
+  title={`404 | ${data.name}`}
+  description={data.home[0].text}
+  favicon={data.logos.primary}
+  featuredImage={data.logos.favicon}
+  keywords="404, page not found"
+>
+  <h1>404</h1>
+  <p>Page not found</p>
+</Layout>

@@ -1,0 +1,29 @@
+---
+import type { RootObject } from "../../interfaces/dbData";
+import ButtonContent from "../buttons/Buttons";
+
+interface Props {
+  data: RootObject;
+}
+
+const { data } = Astro.props;
+---
+
+<div class="flex flex-wrap justify-center items-center bg-primary pt-[200px] pb-[250px]">
+  <!-- Image side with overlay -->
+  <!-- Text side with white background -->
+  <div class="md:w-[70%] mx-auto w-[95%]">
+    <div
+      class="md:w-[70%] mx-auto flex flex-col gap-6 text-center justify-center items-center"
+    >
+      <h2 class="md:text-[50px] text-[25px] mb-2 font-bold text-white">
+        {data.slogan[3]}
+      </h2>
+      <ButtonContent
+        linkBtn={`tel:+1${data.dataGeneral.phones[0].number}`}
+        btnstyle="bg-white text-primary"
+        onePage={data.widgets.onePages}
+      />
+    </div>
+  </div>
+</div>

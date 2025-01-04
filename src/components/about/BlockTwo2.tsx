@@ -19,7 +19,7 @@ const ValuesAbout2: React.FC<ValuesAbout2Props> = ({ nameCompany, data }) => {
                         <div className="text-left">
                             <p className="dark:text-gray-300 text-gray-800 uppercase font-semibold"> {data.slogan[5]} </p>
                             <h2 className="text-4xl font-bold dark:text-white text-gray-900">
-                                Superior roofing <span className="text-primary">services</span> for all your needs
+                                Superior remodeling <span className="text-primary">services</span> for all your needs
                             </h2>
                         </div>
                         <p className="dark:text-gray-300 text-gray-800">

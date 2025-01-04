@@ -25,7 +25,7 @@ const SlidesShow2: React.FC<SlidesShow2Props> = ({ data }) => {
 
     return (
         <div className="relative md:h-[90vh] h-[105vh] flex items-center justify-center overflow-hidden">
-            <div className="absolute z-10 w-full h-full">
+            <div className="absolute z-[9] w-full h-full">
                 <Swiper
                     modules={[Autoplay, EffectFade]}
                     autoplay={{
@@ -52,7 +52,7 @@ const SlidesShow2: React.FC<SlidesShow2Props> = ({ data }) => {
 
             </div>
             {/* overlay */}
-            <div className="absolute w-full h-full top-0 left-0 z-20 bg-black opacity-40"></div>
+            <div className="absolute w-full h-full top-0 left-0 z-[10] bg-black opacity-40"></div>
 
             <div className="w-full md:flex h-full items-center justify-end relative">
                 <div className="w-full h-full relative justify-between flex z-40">
@@ -93,7 +93,7 @@ const SlidesShow2: React.FC<SlidesShow2Props> = ({ data }) => {
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 885.3 855.43" className="text-primary w-[46%] absolute md:block hidden -right-20 -top-24 z-10" >
                         <path fill="CurrentColor" d="M0,56l309.97,535.07c15.75,27.19,55.06,27.08,70.65-.21L649.97,119.42l-.97-119.42H0v56Z" />
                     </svg>
-                    <img src="../../../public/assets/img/slider-v1-shape1.png" className="absolute -top-20 w-[33%] right-[20%] md:block hidden" />
+                    <img src="../../../public/assets/img/slider-v1-shape1.png" className="absolute -top-20 w-[33%] right-[20%] md:block hidden z-[9]" />
 
                 </div>
             </div>

@@ -53,7 +53,7 @@ const MenuMobile: React.FunctionComponent<MenuMobileProps> = ({
               alt="Logo"
               width={130}
               height={120}
-              className="w-[220px] flex justify-start text-center py-4 animated-element"
+              className="w-[260px] flex justify-start text-center py-4 animated-element"
             />
           </div>
           <div className="flex justify-between items-center h-16 self-center w-[80%] mx-auto">
